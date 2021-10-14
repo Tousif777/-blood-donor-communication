@@ -8,19 +8,32 @@ import Typography from "@material-ui/core/Typography";
 import Comment from "./Comment";
 import "./Leftside.css";
 import db from "../firebase";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
+import firebase from "firebase";
+import Addcomment from "./Addcomment";
 
 export default function Leftside() {
   const [value, setvalue] = useState([]);
+  const [comment, setcomment] = useState([]);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
-    db.collection("posts").onSnapshot(
-      (snapshot) => setvalue(snapshot.docs.map((doc) => doc.data())),
-      console.log(value)
-    );
+    db.collection("posts")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setvalue(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            post: doc.data(),
+          }))
+        );
+      });
   }, []);
+
   return (
     <div className="leftside">
-      {value.map((item) => (
+      {value.map(({ post, id }) => (
         <Card
           className="root"
           style={{
@@ -29,34 +42,31 @@ export default function Leftside() {
           }}
         >
           <CardHeader
-            avatar={<Avatar src={item.photo} className="sidebar_avatar" />}
-            title={item.displayname}
+            avatar={<Avatar src={post.photo} className="sidebar_avatar" />}
+            title={post.displayname}
+            subheader={new Date(post.timestamp?.toDate()).toLocaleString()}
           />
-
+          {post.displayname === user.displayName ? (
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                db.collection("posts").doc(id).delete();
+              }}
+            >
+              Delete
+            </Button>
+          ) : (
+            <div></div>
+          )}
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              <strong>{item.displayname} </strong> {item.post}
+              <b>{post.post}</b>
+              <br />
             </Typography>
           </CardContent>
           <CardContent>
-            <FormGroup>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <TextField
-                  style={{ width: 300 }}
-                  label="Add comment"
-                  variant="filled"
-                />
-                <Button variant="contained" color="secondary">
-                  Add comment
-                </Button>
-              </div>
-            </FormGroup>
+            <Addcomment postid={id} key={id} />
             <div
               className="element"
               style={{
@@ -64,10 +74,10 @@ export default function Leftside() {
                 overflow: "scroll",
               }}
             >
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
+              {comment.map(({ comment, id }) => (
+                <Comment key={id} comment={comment} postid={id} user={user} />
+              ))}
+              <Comment postid={id} />
             </div>
           </CardContent>
         </Card>

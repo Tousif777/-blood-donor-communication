@@ -7,7 +7,6 @@ import db from "../firebase";
 const Post = () => {
   const [post, setpost] = useState("");
   const user = useSelector(selectUser);
-
   const sendPost = (e) => {
     e.preventDefault();
     db.collection("posts").add({
@@ -21,6 +20,7 @@ const Post = () => {
 
     setpost("");
   };
+
   return (
     <div
       style={{
