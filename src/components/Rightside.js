@@ -27,12 +27,18 @@ const Rightside = () => {
           <TextField
             label="Search blood group"
             value={value}
-            onChange={(e) => setvalue(e.target.value)}
+            //change the value in small letter
+            onChange={(e) => setvalue(e.target.value.toLowerCase())}
           />
         </div>
         <div className="data">
+          {donar.length < 1 ? (
+            <p>No data</p>
+          ) : (
+            <p>Total donar: {donar.length}</p>
+          )}
           {donar.map(({ id, data }) => (
-            <Data key={id} data={data} />
+            <Data key={id} data={data} id={id} />
           ))}
         </div>
       </Paper>

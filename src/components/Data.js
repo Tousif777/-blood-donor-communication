@@ -1,13 +1,40 @@
 import {
   Avatar,
+  Button,
   Card,
   CardContent,
   CardHeader,
+  TextField,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import db from "../firebase";
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
+import firebase from "firebase";
 
-function Data({ data }) {
+function Data({ data, id }) {
+  const user = useSelector(selectUser);
+  const [message, setmessage] = useState("");
+
+  const sendMessages = (e) => {
+    e.preventDefault();
+    db.collection("messages")
+      .add({
+        uid: data.uid,
+        message: message,
+        name: user.displayName,
+        photo: user.photo,
+        email: user.email,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        setmessage("");
+      });
+  };
+
   return (
     <div>
       <Card
@@ -32,6 +59,43 @@ function Data({ data }) {
             <p>
               Location: <strong> {data.location} </strong>
             </p>
+            <Popup
+              trigger={
+                <Button variant="contained" color="secondary">
+                  Contact
+                </Button>
+              }
+              position="left"
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "20px",
+                }}
+              >
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Multiline"
+                  multiline
+                  rows={4}
+                  value={message}
+                  onChange={(e) => setmessage(e.target.value)}
+                  variant="outlined"
+                />
+                <Button
+                  style={{ marginTop: "10px" }}
+                  variant="contained"
+                  color="primary"
+                  onClick={sendMessages}
+                >
+                  Send
+                </Button>
+              </div>
+            </Popup>
+            ;
           </Typography>
         </CardContent>
       </Card>

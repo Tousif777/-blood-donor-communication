@@ -5,6 +5,7 @@ import Moment from "react-moment";
 
 function Comment({ postid }) {
   const [comments, setComments] = React.useState([]);
+
   useEffect(() => {
     db.collection("posts")
       .doc(postid)
@@ -41,6 +42,7 @@ function Comment({ postid }) {
             }}
           >
             <Typography variant="body1">{comment}</Typography>
+            <Typography variant="body2" color="textSecondary"></Typography>
           </div>
         </div>
       ))}
