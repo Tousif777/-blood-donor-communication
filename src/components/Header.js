@@ -13,6 +13,7 @@ import "reactjs-popup/dist/index.css";
 import db from "../firebase";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
+import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +58,7 @@ export default function Header() {
             Blood donation
           </Typography>
           <Popup
+            style={{ marginRight: "20px" }}
             trigger={
               <Button variant="contained" color="secondary">
                 Message
@@ -73,13 +75,18 @@ export default function Header() {
                 padding: "20px",
               }}
             >
-              {messages.map((message) => (
+              {messages.map(({ message, id }) => (
                 <div>
                   <p>
-                    {message.message.uid === user.uid ? (
-                      <p>
-                        <b>{message.message.name}</b> --
-                        {message.message.message}
+                    {message.uid === user.uid ? (
+                      <p
+                        onDoubleClick={() => {
+                          db.collection("messages").doc(id).delete();
+                        }}
+                      >
+                        <b>{message.name}</b> --
+                        {message.message}
+                        <hr />
                       </p>
                     ) : (
                       <p>You dont have any messages</p>
@@ -90,7 +97,7 @@ export default function Header() {
             </div>
           </Popup>
 
-          <Button Link to="/adddoner" color="inherit">
+          <Button variant="contained" color="secondary" Link to="/adddoner">
             <Link
               style={{ textDecoration: "none", color: "white" }}
               to="/adddoner"
@@ -100,7 +107,9 @@ export default function Header() {
           </Button>
           <Button
             onClick={() => auth.signOut()}
-            style={{ color: "white", marginLeft: "30px" }}
+            variant="contained"
+            color="secondary"
+            ml={3}
           >
             Logout
           </Button>
