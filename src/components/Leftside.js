@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import firebase from "firebase";
 import Addcomment from "./Addcomment";
+import Fade from "react-reveal/Fade";
 
 export default function Leftside() {
   const [value, setvalue] = useState([]);
@@ -34,53 +35,55 @@ export default function Leftside() {
   return (
     <div className="leftside">
       {value.map(({ post, id }) => (
-        <Card
-          className="root"
-          style={{
-            maxWidth: 480,
-            marginTop: 50,
-          }}
-        >
-          <CardHeader
-            avatar={<Avatar src={post.photo} className="sidebar_avatar" />}
-            title={post.displayname}
-            subheader={new Date(post.timestamp?.toDate()).toLocaleString()}
-          />
-          {post.displayname === user.displayName ? (
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                db.collection("posts").doc(id).delete();
-              }}
-            >
-              Delete
-            </Button>
-          ) : (
-            <div></div>
-          )}
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <b>{post.post}</b>
-              <br />
-            </Typography>
-          </CardContent>
-          <CardContent>
-            <Addcomment postid={id} key={id} />
-            <div
-              className="element"
-              style={{
-                maxHeight: "100px",
-                overflow: "scroll",
-              }}
-            >
-              {comment.map(({ comment, id }) => (
-                <Comment key={id} comment={comment} postid={id} user={user} />
-              ))}
-              <Comment postid={id} />
-            </div>
-          </CardContent>
-        </Card>
+        <Fade>
+          <Card
+            className="root"
+            style={{
+              maxWidth: 480,
+              marginTop: 50,
+            }}
+          >
+            <CardHeader
+              avatar={<Avatar src={post.photo} className="sidebar_avatar" />}
+              title={post.displayname}
+              subheader={new Date(post.timestamp?.toDate()).toLocaleString()}
+            />
+            {post.displayname === user.displayName ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  db.collection("posts").doc(id).delete();
+                }}
+              >
+                Delete
+              </Button>
+            ) : (
+              <div></div>
+            )}
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <b>{post.post}</b>
+                <br />
+              </Typography>
+            </CardContent>
+            <CardContent>
+              <Addcomment postid={id} key={id} />
+              <div
+                className="element"
+                style={{
+                  maxHeight: "100px",
+                  overflow: "scroll",
+                }}
+              >
+                {comment.map(({ comment, id }) => (
+                  <Comment key={id} comment={comment} postid={id} user={user} />
+                ))}
+                <Comment postid={id} />
+              </div>
+            </CardContent>
+          </Card>
+        </Fade>
       ))}
     </div>
   );

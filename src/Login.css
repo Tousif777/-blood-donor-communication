@@ -6,11 +6,10 @@
 }
 .login > div > img {
   object-fit: contain;
-  height: 150px;
+  height: 180px;
 }
 .login_logo {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-around;
 }

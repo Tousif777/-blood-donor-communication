@@ -23,6 +23,7 @@ function Data({ data, id }) {
     e.preventDefault();
     db.collection("messages")
       .add({
+        rname: data.displayname,
         uid: data.uid,
         message: message,
         name: user.displayName,

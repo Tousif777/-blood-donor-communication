@@ -7,7 +7,7 @@ import Rightside from "./components/Rightside";
 
 function Home() {
   return (
-    <div className="home">
+    <div className="home" style={{ backgroundColor: "#f5f5f5" }}>
       <Header />
       <div className="container">
         <div className="row">

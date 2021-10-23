@@ -13,8 +13,6 @@ import "reactjs-popup/dist/index.css";
 import db from "../firebase";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import { Paper } from "@material-ui/core";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -78,19 +76,18 @@ export default function Header() {
               {messages.map(({ message, id }) => (
                 <div>
                   <p>
-                    {message.uid === user.uid ? (
+                    {message.name === user.displayName ||
+                    message.rname === user.displayName ? (
                       <p
                         onDoubleClick={() => {
                           db.collection("messages").doc(id).delete();
                         }}
                       >
-                        <b>{message.name}</b> --
-                        {message.message}
+                        <b>{message.name}</b> : {message.message} <br />
+                        <br />
                         <hr />
                       </p>
-                    ) : (
-                      <p>You dont have any messages</p>
-                    )}
+                    ) : null}
                   </p>
                 </div>
               ))}
