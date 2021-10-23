@@ -93,13 +93,21 @@ export default function Header() {
               ))}
             </div>
           </Popup>
+          <Button variant="contained" color="secondary" Link to="/adddoner">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/alldoner"
+            >
+              See all donors
+            </Link>
+          </Button>
 
           <Button variant="contained" color="secondary" Link to="/adddoner">
             <Link
               style={{ textDecoration: "none", color: "white" }}
               to="/adddoner"
             >
-              became a doner
+              became a donor
             </Link>
           </Button>
           <Button
