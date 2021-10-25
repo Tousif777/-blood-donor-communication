@@ -4,9 +4,14 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import firebase from "firebase";
 import db from "../firebase";
+import { usePosition } from "use-position";
+
 const Post = () => {
   const [post, setpost] = useState("");
   const user = useSelector(selectUser);
+  const watch = true;
+  const { latitude, longitude, speed, timestamp, accuracy, error } =
+    usePosition(watch);
   const sendPost = (e) => {
     e.preventDefault();
     db.collection("posts").add({
@@ -16,6 +21,8 @@ const Post = () => {
       photo: user.photo,
       email: user.email,
       displayname: user.displayName,
+      latitude: { latitude },
+      longitude: { longitude },
     });
 
     setpost("");

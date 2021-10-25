@@ -13,11 +13,19 @@ import { selectUser } from "../features/userSlice";
 import firebase from "firebase";
 import Addcomment from "./Addcomment";
 import Fade from "react-reveal/Fade";
+import Mylocation from "./Mylocation";
+
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 export default function Leftside() {
   const [value, setvalue] = useState([]);
   const [comment, setcomment] = useState([]);
   const user = useSelector(selectUser);
+  const [center, setcenter] = useState({
+    lat: 37.78825,
+    lng: -122.4324,
+  });
+  const [zoom, setzoom] = useState(11);
 
   useEffect(() => {
     db.collection("posts")
@@ -66,6 +74,14 @@ export default function Leftside() {
                 <b>{post.post}</b>
                 <br />
               </Typography>
+              <br />
+              <div style={{ height: "200px", width: "300px" }}>
+                <Mylocation
+                  ltd={post.latitude.latitude}
+                  lon={post.longitude.longitude}
+                />
+                <br />
+              </div>
             </CardContent>
             <CardContent>
               <Addcomment postid={id} key={id} />

@@ -11,7 +11,10 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "firebase": "^8.6.8",
+    "leaflet": "^1.7.1",
+    "mapbox-gl": "^2.5.1",
     "moment": "^2.29.1",
+    "pigeon-maps": "^0.19.7",
     "react": "^17.0.2",
     "react-alert": "^7.0.3",
     "react-dom": "^17.0.2",
@@ -22,7 +25,8 @@
     "react-scripts": "4.0.3",
     "react-tiger-transition": "^4.1.2",
     "reactjs-popup": "^2.0.5",
-    "sweetalert2": "^11.1.9"
+    "sweetalert2": "^11.1.9",
+    "use-position": "0.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
