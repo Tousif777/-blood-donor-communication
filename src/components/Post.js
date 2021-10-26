@@ -1,5 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import firebase from "firebase";
@@ -12,21 +12,27 @@ const Post = () => {
   const watch = true;
   const { latitude, longitude, speed, timestamp, accuracy, error } =
     usePosition(watch);
-  const sendPost = (e) => {
-    e.preventDefault();
-    db.collection("posts").add({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      post: post,
-      uid: user.uid,
-      photo: user.photo,
-      email: user.email,
-      displayname: user.displayName,
-      latitude: { latitude },
-      longitude: { longitude },
-    });
 
-    setpost("");
-  };
+  function sendPost(e) {
+    e.preventDefault();
+    if (!longitude || !latitude) {
+      alert("Please enable location to post");
+      return;
+    } else {
+      db.collection("posts").add({
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        post: post,
+        uid: user.uid,
+        photo: user.photo,
+        email: user.email,
+        displayname: user.displayName,
+        latitude: { latitude },
+        longitude: { longitude },
+      });
+
+      setpost("");
+    }
+  }
 
   return (
     <div

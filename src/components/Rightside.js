@@ -27,15 +27,23 @@ const Rightside = () => {
           <TextField
             label="Search blood group"
             value={value}
-            //change the value in small letter
             onChange={(e) => setvalue(e.target.value.toLowerCase())}
           />
         </div>
         <div className="data">
           {donar.length < 1 ? (
-            <p>No data</p>
+            <>
+              {value === "" ? (
+                <p>Please insert a blood group</p>
+              ) : (
+                <p>No data found</p>
+              )}
+            </>
           ) : (
-            <p>Total donar: {donar.length}</p>
+            <p>
+              Total donor who contains {value.toUpperCase()}:{" "}
+              <b> {donar.length} </b>
+            </p>
           )}
           {donar.map(({ id, data }) => (
             <Data key={id} data={data} id={id} />

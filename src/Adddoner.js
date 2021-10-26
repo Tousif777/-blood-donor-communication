@@ -16,23 +16,28 @@ const Adddoner = () => {
 
   const sendMessage = (e) => {
     e.preventDefault();
-    db.collection("donar").add({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      bloodgroup: bloodgroup.toLowerCase(),
-      number: number,
-      location: location,
-      uid: user.uid,
-      photo: user.photo,
-      email: user.email,
-      displayname: user.displayName,
-    });
-
-    setbloodgroup("");
-    setlocation("");
-    setnumber("");
-
-    //back to home page after adding with react router dom
-    history.push("/");
+    // if email already in donar
+    if (user) {
+      db.collection("doners")
+        .where("email", "==", user.email)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.empty) {
+            db.collection("doners").add({
+              email: user.email,
+              bloodgroup: bloodgroup,
+              number: number,
+              location: location,
+            });
+            history.push("/");
+          } else {
+            alert("You are already a doner");
+            setbloodgroup("");
+            setnumber("");
+            setlocation("");
+          }
+        });
+    }
   };
 
   return (

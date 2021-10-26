@@ -6,7 +6,7 @@ const Mylocation = ({ ltd, lon }) => {
   const color = `hsl(${hue % 360}deg 39% 70%)`;
 
   return (
-    <Map defaultCenter={[ltd, lon]} defaultZoom={13}>
+    <Map defaultCenter={[ltd, lon]} defaultZoom={15}>
       <Marker
         width={50}
         anchor={[ltd, lon]}

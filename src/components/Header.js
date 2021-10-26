@@ -4,8 +4,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 import Popup from "reactjs-popup";
@@ -44,14 +42,6 @@ export default function Header() {
     <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: "#d32f2f" }}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" className={classes.title}>
             Blood donation
           </Typography>
@@ -93,12 +83,18 @@ export default function Header() {
               ))}
             </div>
           </Popup>
-          <Button variant="contained" color="secondary" Link to="/adddoner">
+          <Button
+            className="button"
+            variant="contained"
+            color="secondary"
+            Link
+            to="/adddoner"
+          >
             <Link
               style={{ textDecoration: "none", color: "white" }}
               to="/alldoner"
             >
-              See all donors
+              All donors
             </Link>
           </Button>
 
@@ -107,7 +103,7 @@ export default function Header() {
               style={{ textDecoration: "none", color: "white" }}
               to="/adddoner"
             >
-              became a donor
+              Became a donor
             </Link>
           </Button>
           <Button
