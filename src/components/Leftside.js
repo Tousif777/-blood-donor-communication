@@ -3,14 +3,13 @@ import { useEffect, useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import { Avatar, Button, FormGroup, TextField } from "@material-ui/core";
+import { Avatar, Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Comment from "./Comment";
 import "./Leftside.css";
 import db from "../firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
-import firebase from "firebase";
 import Addcomment from "./Addcomment";
 import Fade from "react-reveal/Fade";
 import Mylocation from "./Mylocation";
@@ -101,6 +100,7 @@ export default function Leftside() {
           </Card>
         </Fade>
       ))}
+      <div style={{ marginTop: "50px" }}></div>
     </div>
   );
 }

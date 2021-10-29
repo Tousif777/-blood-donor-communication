@@ -16,7 +16,6 @@ const Adddoner = () => {
 
   const sendMessage = (e) => {
     e.preventDefault();
-    // if email already in donar
     if (user) {
       db.collection("doners")
         .where("email", "==", user.email)
