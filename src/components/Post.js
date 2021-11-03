@@ -16,7 +16,7 @@ const Post = () => {
   function sendPost(e) {
     e.preventDefault();
     if (!longitude || !latitude) {
-      alert("Please enable location to post");
+      alert("Please enable location to post orelse you can't able to post");
       return;
     } else {
       db.collection("posts").add({
